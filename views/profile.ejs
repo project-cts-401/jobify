@@ -51,7 +51,7 @@
                         <label for="resume">Resume (PDF)</label>
                         <input type="file" id="resume" name="resume" accept=".pdf">
                         <% if (profile.resume_path) { %>
-                            <p>Current: <a href="/<%= profile.resume_path %>" target="_blank">View Resume</a></p>
+                            <p>Current: <a href="../uploads/<%= profile.resume_path %>" target="_blank">View Resume</a></p>
                             <input type="hidden" name="existing_resume" value="<%= profile.resume_path %>">
                             <% } %>
                     </div>
@@ -59,7 +59,7 @@
                         <label for="id_doc">ID Document (PDF)</label>
                         <input type="file" id="id_doc" name="id_doc" accept=".pdf">
                         <% if (profile.id_path) { %>
-                            <p>Current: <a href="/<%= profile.id_path %>" target="_blank">View ID</a></p>
+                            <p>Current: <a href="../uploads/<%= profile.id_path %>" target="_blank">View ID</a></p>
                             <input type="hidden" name="existing_id" value="<%= profile.id_path %>">
                             <% } %>
                     </div>

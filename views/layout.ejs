@@ -9,21 +9,7 @@
 </head>
 
 <body>
-    <nav class="navbar">
-        <a href="/jobs">Home</a>
-        <a href="/jobs/search">Jobs</a>
-        <% if (user) { %>
-            <a href="/auth/profile">Profile</a>
-            <a href="/applications/my-applications">Profile</a>
-            <% if (user.role === 'admin') { %>
-                <a href="/jobs/post">Post Job</a>
-                <% } %>
-                    <a href="/auth/logout">Logout</a>
-                    <% } else { %>
-                        <a href="/auth/login">Login</a>
-                        <a href="/auth/register">Register</a>
-                        <% } %>
-    </nav>
+
     <main>
         <% if (error) { %>
             <p class="error">
