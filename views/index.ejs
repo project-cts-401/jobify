@@ -1,0 +1,50 @@
+<h1>UMP Job Connect</h1>
+<% if (error) { %>
+    <p class="error">
+        <%= error %>
+    </p>
+    <% } %>
+        <% if (success) { %>
+            <p class="success">
+                <%= success %>
+            </p>
+            <% } %>
+                <h2>All Jobs</h2>
+                <div class="job-grid">
+                    <% jobs.forEach(job => { %>
+                        <div class="job-card">
+                            <h3>
+                                <%= job.title %>
+                            </h3>
+                            <p><strong>Department:</strong>
+                                <%= job.department %>
+                            </p>
+                            <p><strong>Posted:</strong>
+                                <%= new Date(job.date_posted).toLocaleDateString() %>
+                            </p>
+                            <p><strong>Deadline:</strong>
+                                <%= new Date(job.deadline).toLocaleDateString() %>
+                            </p>
+                            <p><strong>Pay:</strong> R
+                                <%= job.pay %>
+                            </p>
+                            <p><strong>Work Mode:</strong>
+                                <%= job.work_mode %>
+                            </p>
+                            <p><strong>Positions:</strong>
+                                <%= job.positions_available %>
+                            </p>
+                            <a href="/<%= job.pdf_path %>" target="_blank">Download PDF</a>
+                            <% if (user && user.role === 'student') { %>
+                                <% if (appliedJobIds.includes(job.id)) { %>
+                                    <p class="applied-status">Applied</p>
+                                    <% } else { %>
+                                        <form action="/applications" method="POST">
+                                            <input type="hidden" name="job_id" value="<%= job.id %>">
+                                            <button type="submit">Apply</button>
+                                        </form>
+                                        <% } %>
+                                            <% } %>
+                        </div>
+                        <% }) %>
+                </div>

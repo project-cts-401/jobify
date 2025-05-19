@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMP Job Connect</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="/jobs">Home</a>
+        <a href="/jobs/search">Jobs</a>
+        <% if (user) { %>
+            <a href="/auth/profile">Profile</a>
+            <a href="/applications/my-applications">Profile</a>
+            <% if (user.role === 'admin') { %>
+                <a href="/jobs/post">Post Job</a>
+                <% } %>
+                    <a href="/auth/logout">Logout</a>
+                    <% } else { %>
+                        <a href="/auth/login">Login</a>
+                        <a href="/auth/register">Register</a>
+                        <% } %>
+    </nav>
+    <main>
+        <% if (error) { %>
+            <p class="error">
+                <%= error %>
+            </p>
+            <% } %>
+                <% if (success) { %>
+                    <p class="success">
+                        <%= success %>
+                    </p>
+                    <% } %>
+                        <%- body %>
+    </main>
+    <script src="/js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<h1>Post a New Job</h1>
+<% if (error) { %>
+    <p class="error">
+        <%= error %>
+    </p>
+    <% } %>
+        <% if (success) { %>
+            <p class="success">
+                <%= success %>
+            </p>
+            <% } %>
+                <form id="post-job-form" action="/jobs/post" method="POST" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label for="title">Job Title <span class="required">*</span></label>
+                        <input type="text" id="title" name="title" placeholder="e.g., Library Assistant" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="department">Department <span class="required">*</span></label>
+                        <input type="text" id="department" name="department" placeholder="e.g., Library Services" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description <span class="required">*</span></label>
+                        <textarea id="description" name="description" placeholder="Describe the job role and responsibilities" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="requirements">Requirements <span class="required">*</span></label>
+                        <textarea id="requirements" name="requirements" placeholder="List required qualifications or skills" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="pay">Pay (R/hour) <span class="required">*</span></label>
+                        <input type="number" id="pay" name="pay" step="0.01" min="0" placeholder="e.g., 50.00" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="working_hours">Working Hours <span class="required">*</span></label>
+                        <input type="text" id="working_hours" name="working_hours" placeholder="e.g., 20 hours/week" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="work_mode">Work Mode <span class="required">*</span></label>
+                        <select id="work_mode" name="work_mode" required>
+      <option value="" disabled selected>Select work mode</option>
+      <option value="remote">Remote</option>
+      <option value="onsite">Onsite</option>
+      <option value="hybrid">Hybrid</option>
+    </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="skills_required">Skills Required <span class="required">*</span></label>
+                        <input type="text" id="skills_required" name="skills_required" placeholder="e.g., communication, organization" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="deadline">Application Deadline <span class="required">*</span></label>
+                        <input type="date" id="deadline" name="deadline" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="employment_period">Employment Period <span class="required">*</span></label>
+                        <input type="text" id="employment_period" name="employment_period" placeholder="e.g., 6 months" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="positions_available">Positions Available <span class="required">*</span></label>
+                        <input type="number" id="positions_available" name="positions_available" min="1" placeholder="e.g., 2" required>
+                    </div>
+                    <button type="submit" id="submit-btn">Post Job</button>
+                </form>
+
+                <script>
+                    function handleSubmit(event) {
+                        const form = document.getElementById('post-job-form');
+                        const submitBtn = document.getElementById('submit-btn');
+                        const deadlineInput = document.getElementById('deadline');
+                        const today = new Date().toISOString().split('T')[0];
+
+                        // Validate deadline is in the future
+                        if (deadlineInput.value < today) {
+                            event.preventDefault();
+                            alert('Application deadline must be in the future');
+                            return;
+                        }
+
+                        // Disable button and show loading state
+                        submitBtn.disabled = true;
+                        submitBtn.textContent = 'Posting...';
+                    }
+
+                    // Set minimum date for deadline to today
+                    document.getElementById('deadline').setAttribute('min', new Date().toISOString().split('T')[0]);
+                </script>

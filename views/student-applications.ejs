@@ -1,0 +1,60 @@
+<h1>My Applications</h1>
+<% if (error) { %>
+    <p class="error">
+        <%= error %>
+    </p>
+    <% } %>
+        <% if (success) { %>
+            <p class="success">
+                <%= success %>
+            </p>
+            <% } %>
+                <% if (applications.length === 0) { %>
+                    <p>No applications submitted yet.</p>
+                    <% } else { %>
+                        <div class="applications-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Job Title</th>
+                                        <th>Department</th>
+                                        <th>Status</th>
+                                        <th>Score</th>
+                                        <th>Applied On</th>
+                                        <th>Job Details</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% applications.forEach(app => { %>
+                                        <tr>
+                                            <td>
+                                                <%= app.title %>
+                                            </td>
+                                            <td>
+                                                <%= app.department %>
+                                            </td>
+                                            <td class="status-<%= app.status %>">
+                                                <%= app.status %>
+                                            </td>
+                                            <td>
+                                                <%= app.score.toFixed(2) %>
+                                            </td>
+                                            <td>
+                                                <%= new Date(app.applied_at).toLocaleDateString() %>
+                                            </td>
+                                            <td><a href="/<%= app.pdf_path %>" target="_blank">View PDF</a></td>
+                                            <td>
+                                                <% if (app.status === 'pending') { %>
+                                                    <form action="/applications/withdraw" method="POST" onsubmit="return confirm('Are you sure you want to withdraw this application?');">
+                                                        <input type="hidden" name="application_id" value="<%= app.id %>">
+                                                        <button type="submit" class="withdraw-btn">Withdraw</button>
+                                                    </form>
+                                                    <% } %>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <% } %>

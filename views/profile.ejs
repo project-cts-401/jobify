@@ -1,0 +1,67 @@
+<h1>Update Profile</h1>
+<% if (error) { %>
+    <p class="error">
+        <%= error %>
+    </p>
+    <% } %>
+        <% if (success) { %>
+            <p class="success">
+                <%= success %>
+            </p>
+            <% } %>
+                <form action="/auth/profile" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="student_number">Student Number</label>
+                        <input type="text" id="student_number" name="student_number" value="<%= profile.student_number || '' %>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" value="<%= profile.name || '' %>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="surname">Surname</label>
+                        <input type="text" id="surname" name="surname" value="<%= profile.surname || '' %>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <select id="title" name="title" required>
+      <option value="Mr" <%= profile.title === 'Mr' ? 'selected' : '' %>>Mr</option>
+      <option value="Ms" <%= profile.title === 'Ms' ? 'selected' : '' %>>Ms</option>
+      <option value="Mrs" <%= profile.title === 'Mrs' ? 'selected' : '' %>>Mrs</option>
+      <option value="Dr" <%= profile.title === 'Dr' ? 'selected' : '' %>>Dr</option>
+    </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="gpa">GPA</label>
+                        <input type="number" id="gpa" name="gpa" step="0.1" min="0" max="4" value="<%= profile.gpa || '' %>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="skills">Skills (comma-separated)</label>
+                        <input type="text" id="skills" name="skills" value="<%= profile.skills || '' %>" placeholder="e.g., communication,technical support">
+                    </div>
+                    <div class="form-group">
+                        <label for="transcript">Transcript (PDF)</label>
+                        <input type="file" id="transcript" name="transcript" accept=".pdf">
+                        <% if (profile.transcript_path) { %>
+                            <p>Current: <a href="/<%= profile.transcript_path %>" target="_blank">View Transcript</a></p>
+                            <input type="hidden" name="existing_transcript" value="<%= profile.transcript_path %>">
+                            <% } %>
+                    </div>
+                    <div class="form-group">
+                        <label for="resume">Resume (PDF)</label>
+                        <input type="file" id="resume" name="resume" accept=".pdf">
+                        <% if (profile.resume_path) { %>
+                            <p>Current: <a href="/<%= profile.resume_path %>" target="_blank">View Resume</a></p>
+                            <input type="hidden" name="existing_resume" value="<%= profile.resume_path %>">
+                            <% } %>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_doc">ID Document (PDF)</label>
+                        <input type="file" id="id_doc" name="id_doc" accept=".pdf">
+                        <% if (profile.id_path) { %>
+                            <p>Current: <a href="/<%= profile.id_path %>" target="_blank">View ID</a></p>
+                            <input type="hidden" name="existing_id" value="<%= profile.id_path %>">
+                            <% } %>
+                    </div>
+                    <button type="submit">Update Profile</button>
+                </form>

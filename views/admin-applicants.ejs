@@ -1,0 +1,91 @@
+<h1></h1>
+Applicants for
+<%= job ? job.title : 'Job' %>
+    </h1>
+    <% if (error) { %>
+        <p class="error">
+            <%= error %>
+        </p>
+        <% } %>
+            <% if (success) { %>
+                <p class="success">
+                    <%= success %>
+                </p>
+                <% } %>
+                    <% if (!job) { %>
+                        <p>Job not found.</p>
+                        <% } else if (applicants.length === 0) { %>
+                            <p>No applicants with scores ≥ 80.</p>
+                            <% } else { %>
+                                <p>Job:
+                                    <%= job.title %> (Department:
+                                        <%= job.department %>)</p>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Student Number</th>
+                                            <th>Name</th>
+                                            <th>Score</th>
+                                            <th>GPA</th>
+                                            <th>Skills</th>
+                                            <!-- <th>Transcript</th>
+                                            <th>Resume</th>
+                                            <th>ID Document</th> -->
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% applicants.forEach(applicant => { %>
+                                            <tr>
+                                                <td>
+                                                    <%= applicant.student_number %>
+                                                </td>
+                                                <td>
+                                                    <%= applicant.name %>
+                                                        <%= applicant.surname %>
+                                                </td>
+                                                <td>
+                                                    <%= applicant.score %>
+                                                </td>
+                                                <td>
+                                                    <%= applicant.gpa %>
+                                                </td>
+                                                <td>
+                                                    <%= applicant.skills %>
+                                                </td>
+
+                                                <td>
+                                                    <%= applicant.status %>
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+                                    </tbody>
+                                </table>
+                                <% } %>
+                                    <style>
+                                        table {
+                                            width: 100%;
+                                            border-collapse: collapse;
+                                            margin-top: 20px;
+                                        }
+                                        
+                                        th,
+                                        td {
+                                            border: 1px solid #ddd;
+                                            padding: 8px;
+                                            text-align: left;
+                                        }
+                                        
+                                        th {
+                                            background-color: #f2f2f2;
+                                        }
+                                        
+                                        a {
+                                            color: #007bff;
+                                            text-decoration: none;
+                                        }
+                                        
+                                        a:hover {
+                                            text-decoration: underline;
+                                        }
+                                    </style>

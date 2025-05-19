@@ -1,0 +1,83 @@
+<% if (error) { %>
+    <p class="error">
+        <%= error %>
+    </p>
+    <% } %>
+        <% if (success) { %>
+            <p class="success">
+                <%= success %>
+            </p>
+            <% } %>
+                <% if (jobs.length === 0) { %>
+                    <p>No jobs posted yet.</p>
+                    <% } else { %>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Department</th>
+                                    <th>Date Posted</th>
+                                    <th>Deadline</th>
+                                    <th>Positions Available</th>
+                                    <th>Applications</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% jobs.forEach(job => { %>
+                                    <tr>
+                                        <td>
+                                            <%= job.title %>
+                                        </td>
+                                        <td>
+                                            <%= job.department %>
+                                        </td>
+                                        <td>
+                                            <%= new Date(job.date_posted).toLocaleDateString() %>
+                                        </td>
+                                        <td>
+                                            <%= new Date(job.deadline).toLocaleDateString() %>
+                                        </td>
+                                        <td>
+                                            <%= job.positions_available %>
+                                        </td>
+                                        <td>
+                                            <%= job.application_count %>
+                                        </td>
+                                        <td>
+                                            <a href="/admin/jobs/<%= job.id %>/applications">View Applicants</a>
+                                            <a href="/<%= job.pdf_path %>" target="_blank">View Job PDF</a>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
+                        <% } %>
+                            <style>
+                                table {
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                    margin-top: 20px;
+                                }
+                                
+                                th,
+                                td {
+                                    border: 1px solid #ddd;
+                                    padding: 8px;
+                                    text-align: left;
+                                }
+                                
+                                th {
+                                    background-color: #f2f2f2;
+                                }
+                                
+                                a {
+                                    color: #007bff;
+                                    text-decoration: none;
+                                    margin-right: 10px;
+                                }
+                                
+                                a:hover {
+                                    text-decoration: underline;
+                                }
+                            </style>

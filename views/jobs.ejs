@@ -1,0 +1,57 @@
+<h1>Search Jobs</h1>
+<% if (success) { %>
+    <p class="success">
+        <%= success %>
+    </p>
+    <% } %>
+        <form action="/jobs/search" method="GET">
+            <input type="text" name="query" placeholder="Search by title or description" value="<%= filters.query || '' %>">
+            <input type="text" name="department" placeholder="Department" value="<%= filters.department || '' %>">
+            <select name="work_mode">
+    <option value="">Work Mode</option>
+    <option value="remote" <%= filters.work_mode === 'remote' ? 'selected' : '' %>>Remote</option>
+    <option value="onsite" <%= filters.work_mode === 'onsite' ? 'selected' : '' %>>Onsite</option>
+    <option value="hybrid" <%= filters.work_mode === 'hybrid' ? 'selected' : '' %>>Hybrid</option>
+  </select>
+            <input type="number" name="min_pay" placeholder="Min Pay" value="<%= filters.min_pay || '' %>">
+            <input type="text" name="skills" placeholder="Skills (comma-separated)" value="<%= filters.skills || '' %>">
+            <button type="submit">Search</button>
+        </form>
+        <div class="job-grid">
+            <% jobs.forEach(job => { %>
+                <div class="job-card">
+                    <h3>
+                        <%= job.title %>
+                    </h3>
+                    <p><strong>Department:</strong>
+                        <%= job.department %>
+                    </p>
+                    <p><strong>Posted:</strong>
+                        <%= new Date(job.date_posted).toLocaleDateString() %>
+                    </p>
+                    <p><strong>Deadline:</strong>
+                        <%= new Date(job.deadline).toLocaleDateString() %>
+                    </p>
+                    <p><strong>Pay:</strong> R
+                        <%= job.pay %>
+                    </p>
+                    <p><strong>Work Mode:</strong>
+                        <%= job.work_mode %>
+                    </p>
+                    <p><strong>Positions:</strong>
+                        <%= job.positions_available %>
+                    </p>
+                    <a href="<%= job.pdf_path %>">Download PDF</a>
+                    <% if (user && user.role === 'student') { %>
+                        <% if (appliedJobIds.includes(job.id)) { %>
+                            <p class="applied-status">Applied</p>
+                            <% } else { %>
+                                <form action="/applications" method="POST">
+                                    <input type="hidden" name="job_id" value="<%= job.id %>">
+                                    <button type="submit">Apply</button>
+                                </form>
+                                <% } %>
+                                    <% } %>
+                </div>
+                <% }) %>
+        </div>
